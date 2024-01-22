@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
             Task('Estudar Ingês'),
             Task('Fazer Almoço'),
             Task('Fazer o Jantar'),
-            Task('Praticar CrossFit'),
+            Task('Beber Água'),
           ],
         ),
         floatingActionButton: FloatingActionButton(onPressed: () {}),
@@ -47,6 +47,7 @@ class Task extends StatefulWidget {
 
 class _TaskState extends State<Task> {
   int nivel = 0;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -80,7 +81,7 @@ class _TaskState extends State<Task> {
                           )),
                       ElevatedButton(
                           onPressed: () {
-                            setState((){
+                            setState(() {
                               nivel++;
                             });
                             print(nivel);
@@ -89,9 +90,27 @@ class _TaskState extends State<Task> {
                     ],
                   ),
                 ),
-                Text(
-                  'Nível: $nivel',
-                  style: TextStyle(color: Colors.white, fontSize: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(18),
+                      child: Container(
+                        child: LinearProgressIndicator(
+                          color: Colors.white,
+                          value: nivel / 15,
+                        ),
+                        width: 200,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Text(
+                        'Nível: $nivel',
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
