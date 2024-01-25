@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class MyApp extends StatefulWidget {
+  MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  bool opacidade = true;
 
   @override
   Widget build(BuildContext context) {
@@ -19,37 +26,50 @@ class MyApp extends StatelessWidget {
           leading: Container(),
           title: Text('Tarefas'),
         ),
-        body: ListView(
-          children: [
-            Task(
-                'Aprender Flutter',
-                'https://pbs.twimg.com/media/Eu7m692XIAEvxxP?format=png&name=large',
-                5),
-            Task(
-                'Arrumar Casa',
-                'https://cirandapoetrix.com.br/storage/jKg1bID4Y8OkJ0jlQhZ9WnxSdnL1NGJENB4EZC81.png',
-                2),
-            Task(
-                'Praticar CrossFit',
-                'https://seeklogo.com/images/C/crossfit-logo-6F7F567BDA-seeklogo.com.png',
-                4),
-            Task('Trabalhar', 'https://www.pngmart.com/files/5/Work-PNG-HD.png',
-                5),
-            Task(
-                'Estudar Ingês',
-                'https://play-lh.googleusercontent.com/uV5ktpFJMVREM--kiaXSlF5ys09WO_sndN20mxJOt0SvBm3ebp5INxva0-feCcmL_VM=w240-h480-rw',
-                3),
-            Task('Fazer Almoço',
-                'https://img.lovepik.com/element/40180/2049.png_860.png', 2),
-            Task('Jogar',
-                'https://cdn-icons-png.flaticon.com/512/2292/2292738.png', 1),
-            Task(
-                'Beber Água',
-                'https://icones.pro/wp-content/uploads/2022/05/icone-verre-d-eau.png',
-                3),
-          ],
+        body: AnimatedOpacity(
+          opacity: opacidade ? 1 : 0,
+          duration: Duration(milliseconds: 800),
+          child: ListView(
+            children: [
+              Task(
+                  'Aprender Flutter',
+                  'https://pbs.twimg.com/media/Eu7m692XIAEvxxP?format=png&name=large',
+                  5),
+              Task(
+                  'Arrumar Casa',
+                  'https://cirandapoetrix.com.br/storage/jKg1bID4Y8OkJ0jlQhZ9WnxSdnL1NGJENB4EZC81.png',
+                  2),
+              Task(
+                  'Praticar CrossFit',
+                  'https://seeklogo.com/images/C/crossfit-logo-6F7F567BDA-seeklogo.com.png',
+                  4),
+              Task('Trabalhar',
+                  'https://www.pngmart.com/files/5/Work-PNG-HD.png', 5),
+              Task(
+                  'Estudar Ingês',
+                  'https://play-lh.googleusercontent.com/uV5ktpFJMVREM--kiaXSlF5ys09WO_sndN20mxJOt0SvBm3ebp5INxva0-feCcmL_VM=w240-h480-rw',
+                  3),
+              Task(
+                  'Fazer Almoço',
+                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7EjeO0L-NqAS7NmXE0wDK59YD6eeH3bpnvA&usqp=CAU',
+                  2),
+              Task('Jogar',
+                  'https://cdn-icons-png.flaticon.com/512/2292/2292738.png', 3),
+              Task(
+                  'Beber Água',
+                  'https://icones.pro/wp-content/uploads/2022/05/icone-verre-d-eau.png',
+                  3),
+            ],
+          ),
         ),
-        floatingActionButton: FloatingActionButton(onPressed: () {}),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            setState((){
+              opacidade = !opacidade;
+            });
+          },
+          child: Icon(Icons.remove_red_eye),
+        ),
       ),
     );
   }
@@ -78,24 +98,34 @@ class _TaskState extends State<Task> {
         child: Stack(
           children: [
             Container(
-              color: Colors.blue,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4), color: Colors.blue),
               height: 140,
             ),
             Column(
               children: [
                 Container(
-                  color: Colors.white,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4),
+                    color: Colors.white,
+                  ),
                   height: 100,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
-                        color: Colors.black26,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4),
+                          color: Colors.black26,
+                        ),
                         width: 72,
                         height: 100,
-                        child: Image.network(
-                          widget.foto,
-                          fit: BoxFit.cover,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(4),
+                          child: Image.network(
+                            widget.foto,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                       Column(
